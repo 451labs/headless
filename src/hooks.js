@@ -1,22 +1,22 @@
 const path = require('path');
 const glob = require('glob');
 const fs = require('fs-extra');
-const os = require('os');
+const fetch = require('node-fetch');
 
 /**
- * Hooks! 
- * 
+ * Hooks!
+ *
  * Lifecycle hooks are the backbone of how you can have complete control over the output of your site.
- * Hooks are enforced via the hookInterface 'contract' defined here: 
+ * Hooks are enforced via the hookInterface 'contract' defined here:
         https://github.com/Elderjs/elderjs/blob/master/src/hookInterface/hookInterface.ts
  *
  * If you read the hookInterface spec closely you'll see that each defined hook gets specific 'props' along with which of those props is 'mutable'.
- * 
- * If you're a fan of 'pure' functions in JS, mutating props will probably set off alarm bells in your head. Fear not, instead of burying 
+ *
+ * If you're a fan of 'pure' functions in JS, mutating props will probably set off alarm bells in your head. Fear not, instead of burying
  * what is mutating things deep in your application, you'll know it is probably in this file.
  *
- * Also, to help keep mutation predictable each 'hook' limits which 'props' can be manipulated and where. 
- * 
+ * Also, to help keep mutation predictable each 'hook' limits which 'props' can be manipulated and where.
+ *
  */
 
 const hooks = [
@@ -80,30 +80,34 @@ const hooks = [
   //   },
   // },
 
-  // {
-  //   hook: 'bootstrap',
-  //   name: 'populateDataForAllRequests',
-  //   description:
-  //     'The goal of this hook is to show you that you can get data from anywhere and add it to the data object.',
-  //   priority: 50,
-  //   run: async ({ data }) => {
-  //     // when you uncomment this, check the homepage for a new box at the top.
-  //     return {
-  //       data: {
-  //         ...data,
-  //         testingHooks: true,
-  //         // here we are using the 'os' node.js native, and passing in data on the number of CPUs
-  //         cpus: os.cpus(),
+  {
+    hook: 'bootstrap',
+    name: 'populateDataForAllRequests',
+    description:
+      'The goal of this hook is to show you that you can get data from anywhere and add it to the data object.',
+    priority: 50,
+    run: async ({ data }) => {
+      // when you uncomment this, check the homepage for a new box at the top.
+      let petitions = await fetch('https://www.daadkhast.org/wp-json/wp/v2/petitions/').then((response) =>
+        response.json(),
+      );
 
-  //         // NOTE: here we are polluting the global data object across all 'requests' because we are using the 'bootstrap' hook.
-  //         // This is bad practice in this example because cpus is only used by Home.svelte, but it is illustrated to show how you could
-  //         // add global data.
+      return {
+        data: {
+          ...data,
+          testingHooks: true,
+          // here we are using the 'os' node.js native, and passing in data on the number of CPUs
+          petitions,
 
-  //         // IMPORTANT: If you want to add data to a specific route only, you should probably do it in your /route.js for that route.
-  //       },
-  //     };
-  //   },
-  // },
+          // NOTE: here we are polluting the global data object across all 'requests' because we are using the 'bootstrap' hook.
+          // This is bad practice in this example because cpus is only used by Home.svelte, but it is illustrated to show how you could
+          // add global data.
+
+          // IMPORTANT: If you want to add data to a specific route only, you should probably do it in your /route.js for that route.
+        },
+      };
+    },
+  },
 
   // If you'd like to see specific examples of how to do things that you think could help improve the template please create a GH issue.
 ];
