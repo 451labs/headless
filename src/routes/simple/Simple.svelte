@@ -10,19 +10,32 @@
 </style>
 
 <svelte:head>
-  <title>{data.title}</title>
+  <title>Simple</title>
   <meta name="description" content="A Simple Route" />
   <link href="{settings.origin}{request.permalink}" rel="canonical" />
 </svelte:head>
 
 <a href="/">&LeftArrow; Home</a>
 
-<h1>{data.title}</h1>
+<article>
 
-<ul>
-  {#each data.steps as step}
-    <li>{@html step}</li>
-  {/each}
-</ul>
+<h1>Headless post</h1>
 
-{@html data.content}
+{#each data.blocks as block}
+
+  <code>{block.blockName}</code>
+
+{/each}
+
+</article>
+
+<h1>Posts</h1>
+
+{#each data.posts as post}
+
+  <article>
+    <h2>{post.title.rendered}</h2>
+    <p>{@html post.content.rendered}</p>
+  </article>
+
+{/each}

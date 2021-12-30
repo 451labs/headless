@@ -74,10 +74,11 @@
 {#if data.testingHooks}
   <div class="banner">
     <p>Testing hooks worked</p>
-    {#if data.petitions}
+    {#if data.cpus}
+      <p>If you use Elder.js to build your site, it will span all {data.cpus.length} cpus listed below:</p>
       <ol>
-        {#each data.petitions as petition}
-          <li>{petition.title.rendered}</li>
+        {#each data.cpus as cpu}
+          <li>{cpu.model}</li>
         {/each}
       </ol>
     {/if}
