@@ -1,14 +1,12 @@
 <script>
   import { getContext } from 'svelte';
 
-  export let block;
+  export let block
 
-  const parser = getContext('parser');
+  const parser = getContext('parser')
 
-  const root = parser.parse(block.innerHTML);
-  const content = root.rawText;
+  const root = parser.parse(block.innerHTML)
+  const content = root.rawText
 </script>
 
-<style>
-</style>
 <p>{content}</p>

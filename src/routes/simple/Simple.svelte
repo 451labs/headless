@@ -1,6 +1,8 @@
 <script>
-  import ParagraphBlock from '../../components/ParagraphBlock.svelte';
   import { setContext } from 'svelte';
+  import ImageBlock from '../../components/ImageBlock.svelte';
+  import ParagraphBlock from '../../components/ParagraphBlock.svelte';
+  import TableBlock from '../../components/TableBlock.svelte';
 
   export let data, request, settings;
 
@@ -28,12 +30,13 @@
 <h1>Headless post</h1>
 
 {#each data.blocks as block}
-
-  <code>{block.blockName}</code>
   {#if 'core/paragraph' === block.blockName}
     <ParagraphBlock block={block} />
+  {:else if 'core/image' === block.blockName}
+    <ImageBlock block={block} />
+  {:else if 'core/table' === block.blockName}
+    <TableBlock block={block} />
   {/if}
-
 {/each}
 
 </article>
