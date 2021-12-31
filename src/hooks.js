@@ -53,7 +53,7 @@ const hooks = [
     description: 'This hook adds a cheeriojs parser object to request data on routes that may require it.',
     priority: 50,
     run: async ({ request, data }) => {
-      if (request.route === 'simple') {
+      if (request.route === 'home') {
         return {
           data: {
             ...data,
