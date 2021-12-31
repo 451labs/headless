@@ -19,16 +19,14 @@ module.exports = {
     let headers = new fetch.Headers()
     headers.append('Authorization', AUTH)
 
-    let posts = await fetch('https://headless.marceloomens.com/wp-json/wp/v2/posts/?context=edit', {headers}).then((response) =>
+    let post = await fetch('https://headless.marceloomens.com/wp-json/wp/v2/posts/1/?context=edit', {headers}).then((response) =>
       response.json()
     )
 
-    let post = posts[0]
     let blocks = blockParser.parse(post.content.raw)
 
     // The data function populates an object that will be in available in our Svelte template under the 'data' key.
     return {
-      posts,
       post,
       blocks,
     };

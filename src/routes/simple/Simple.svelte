@@ -27,7 +27,7 @@
 
 <article>
 
-<h1>Headless post</h1>
+<h1>{data.post.title.rendered}</h1>
 
 {#each data.blocks as block}
   {#if 'core/paragraph' === block.blockName}
@@ -40,14 +40,3 @@
 {/each}
 
 </article>
-
-<h1>Posts</h1>
-
-{#each data.posts as post}
-
-  <article>
-    <h2>{post.title.rendered}</h2>
-    <p>{@html post.content.rendered}</p>
-  </article>
-
-{/each}
