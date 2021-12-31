@@ -1,12 +1,12 @@
 <script>
   import { getContext } from 'svelte';
 
-  export let block
+  export let block;
 
-  const parser = getContext('parser')
+  const parser = getContext('parser');
 
-  const root = parser.parse(block.innerHTML)
-  const content = root.rawText
+  const doc = parser.load(block.innerHTML, null, false);
+  const p = doc('p').html();
 </script>
 
-<p>{content}</p>
+<p>{@html p}</p>

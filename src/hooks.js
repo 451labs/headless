@@ -3,7 +3,7 @@ const glob = require('glob');
 const fs = require('fs-extra');
 const os = require('os');
 
-const parser = require('node-html-parser');
+const cheerio = require('cheerio');
 
 /**
  * Hooks!
@@ -50,14 +50,14 @@ const hooks = [
   {
     hook: 'request',
     name: 'addParserObject',
-    description: 'This hook adds a node-html-parser object to request data on routes that may require it.',
+    description: 'This hook adds a cheeriojs parser object to request data on routes that may require it.',
     priority: 50,
     run: async ({ request, data }) => {
       if (request.route === 'simple') {
         return {
           data: {
             ...data,
-            parser,
+            parser: cheerio,
           },
         };
       }
