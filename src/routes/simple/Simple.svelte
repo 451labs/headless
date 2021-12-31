@@ -1,5 +1,11 @@
 <script>
+  import ParagraphBlock from '../../components/ParagraphBlock.svelte';
+  import { setContext } from 'svelte';
+
   export let data, request, settings;
+
+  setContext('parser', data.parser);
+
 </script>
 
 <style>
@@ -24,6 +30,9 @@
 {#each data.blocks as block}
 
   <code>{block.blockName}</code>
+  {#if 'core/paragraph' === block.blockName}
+    <ParagraphBlock block={block} />
+  {/if}
 
 {/each}
 

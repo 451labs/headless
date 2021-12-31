@@ -34,6 +34,7 @@
     "glob": "^7.1.6",
     "intersection-observer": "^0.12.0",
     "node-fetch": "^2.6.6",
+    "node-html-parser": "^5.2.0",
     "polka": "^0.5.2",
     "sirv": "^1.0.11",
     "svelte": "^3.38.3",

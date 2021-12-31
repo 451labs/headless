@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
-const { parse } = require('@wordpress/block-serialization-default-parser');
+const blockParser = require('@wordpress/block-serialization-default-parser');
+
 
 module.exports = {
   // the all function returns an array of all of the 'request' objects of a route.
@@ -23,7 +24,7 @@ module.exports = {
     )
 
     let post = posts[0]
-    let blocks = parse(post.content.raw)
+    let blocks = blockParser.parse(post.content.raw)
 
     // The data function populates an object that will be in available in our Svelte template under the 'data' key.
     return {
