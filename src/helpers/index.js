@@ -2,8 +2,8 @@ const blockParser = require('@wordpress/block-serialization-default-parser')
 const cheerio = require('cheerio')
 const fetch = require('node-fetch')
 
+function apiFetch() {
 
-async function apiFetch( path, querystring='' ) {
   const USER = process.env.WP_USER
   const PASS = process.env.WP_PASS
   const AUTH = 'Basic ' + Buffer.from(USER + ":" + PASS).toString('base64')
@@ -11,14 +11,21 @@ async function apiFetch( path, querystring='' ) {
   const headers = new fetch.Headers()
   headers.append('Authorization', AUTH)
 
-  return await fetch(`https://headless.marceloomens.com/wp-json/${path}/?context=edit&${querystring}`, {headers}).then((response) =>
-    response.json()
-  )
+  return async function ( path, params={} ) {
+    let querystring = '?context=edit';
+    for (const [key, value] of Object.entries(params)) {
+      querystring += (`&${key}=${value}`);
+    }
+
+    return await fetch(`https://headless.marceloomens.com/wp-json/${path}/${querystring}`, {headers}).then((response) =>
+      response.json()
+    )
+  }
 }
 
 
 module.exports = {
-  apiFetch,
+  apiFetch: apiFetch(),
   blockParser: blockParser.parse,
-  parser: cheerio,
+  domParser: cheerio,
 }
