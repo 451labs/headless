@@ -4,9 +4,9 @@
   import ParagraphBlock from '../../components/ParagraphBlock.svelte';
   import TableBlock from '../../components/TableBlock.svelte';
 
-  export let data, request, settings;
+  export let data, request, settings, helpers;
 
-  setContext('parser', data.parser);
+  setContext('parser', helpers.parser);
 
 </script>
 

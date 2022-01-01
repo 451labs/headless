@@ -8,9 +8,9 @@ module.exports = {
   all: async () => [{ slug: '/' }],
   // the permalink definition takes a 'request' object and returns a relative permalink.
   permalink: '/', // this is the same as ({ request }) => `/${request.slug}/`;
-  data: async ({ request, query }) => {
+  data: async ({ request, helpers }) => {
 
-    let posts = query.apiFetch('wp/v2/posts/')
+    let posts = helpers.apiFetch('wp/v2/posts/')
 
     // The data function populates an object that will be in available in our Svelte template under the 'data' key.
     return {

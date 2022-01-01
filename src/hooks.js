@@ -2,9 +2,6 @@ const path = require('path');
 const glob = require('glob');
 const fs = require('fs-extra');
 
-const fetch = require('node-fetch');
-const cheerio = require('cheerio');
-
 /**
  * Hooks!
  *
@@ -42,48 +39,6 @@ const hooks = [
           fs.outputFileSync(outputPath, fs.readFileSync(file));
         }
       });
-    },
-  },
-
-  {
-    hook: 'bootstrap',
-    name: 'addFetchHandler',
-    description: 'Add a fetch handler on the query object (available at `query.apiFetch`)',
-    run: async ({ query }) => {
-
-      const USER = process.env.WP_USER
-      const PASS = process.env.WP_PASS
-      const AUTH = 'Basic ' + Buffer.from(USER + ":" + PASS).toString('base64')
-
-      const headers = new fetch.Headers()
-      headers.append('Authorization', AUTH)
-
-      const apiFetch = async function( path, querystring='' ) {
-        return await fetch(`https://headless.marceloomens.com/wp-json/${path}/?context=edit&${querystring}`, {headers}).then((response) =>
-          response.json()
-        )
-      }
-
-      return {
-        query: { ...query, apiFetch }
-      }
-    },
-  },
-
-  {
-    hook: 'request',
-    name: 'addParserObject',
-    description: 'Add a cheeriojs parser object to request data on routes that may require it.',
-    priority: 50,
-    run: async ({ request, data }) => {
-      if (request.route === 'post') {
-        return {
-          data: {
-            ...data,
-            parser: cheerio,
-          },
-        };
-      }
     },
   },
 

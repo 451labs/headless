@@ -1,13 +1,10 @@
-const blockParser = require('@wordpress/block-serialization-default-parser');
-
-
 module.exports = {
   all: async () => [{ post_id: 1, slug: 'hello-world' }, { post_id: 16, slug: 'collateral-freedom' }],
   permalink: '/article/:slug/', // this is the same as ({ request }) => `/${request.slug}/`;
-  data: async ({ request, query }) => {
+  data: async ({ request, helpers }) => {
 
-    let post = await query.apiFetch(`wp/v2/posts/${request.post_id}/`)
-    let blocks = blockParser.parse(post.content.raw)
+    let post = await helpers.apiFetch(`wp/v2/posts/${request.post_id}/`)
+    let blocks = helpers.blockParser(post.content.raw)
 
     // preprocess media
     let mids = []
@@ -16,7 +13,7 @@ module.exports = {
         mids.push(block.attrs.id)
       }
     }
-    let media = await query.apiFetch('wp/v2/media/', `include=${mids.join(',')}`)
+    let media = await helpers.apiFetch('wp/v2/media/', `include=${mids.join(',')}`)
 
     // The data function populates an object that will be in available in our Svelte template under the 'data' key.
     return {
