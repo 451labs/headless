@@ -13,7 +13,8 @@ function apiFetch() {
 
   return async function ( path, params={} ) {
     let querystring = '?context=edit';
-    for (const [key, value] of Object.entries(params)) {
+    for (let [key, value] of Object.entries(params)) {
+      value = Array.isArray(value) ? value.join(',') : value
       querystring += (`&${key}=${value}`);
     }
 
