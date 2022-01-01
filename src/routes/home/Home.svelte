@@ -24,7 +24,7 @@
   {#if 'core/paragraph' === block.blockName}
     <ParagraphBlock block={block} />
   {:else if 'core/image' === block.blockName}
-    <ImageBlock block={block} />
+    <ImageBlock block={block} media={data.media} />
   {:else if 'core/table' === block.blockName}
     <TableBlock block={block} />
   {/if}

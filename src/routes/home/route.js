@@ -19,17 +19,28 @@ module.exports = {
     let headers = new fetch.Headers()
     headers.append('Authorization', AUTH)
 
-    let post = await fetch('https://headless.marceloomens.com/wp-json/wp/v2/posts/1/?context=edit', {headers}).then((response) =>
+    let post = await fetch(`https://headless.marceloomens.com/wp-json/wp/v2/posts/1/?context=edit`, {headers}).then((response) =>
       response.json()
     )
 
     let blocks = blockParser.parse(post.content.raw)
 
+    // preprocess media
+    let mids = []
+    for (const block of blocks) {
+      if ('core/image' === block.blockName) {
+        mids.push(block.attrs.id)
+      }
+    }
+    let media = await fetch(`https://headless.marceloomens.com/wp-json/wp/v2/media/?context=edit&include=${mids.join(',')}`, {headers}).then((response) =>
+      response.json()
+    )
 
     // The data function populates an object that will be in available in our Svelte template under the 'data' key.
     return {
       post,
       blocks,
+      media,
     };
   },
 
