@@ -1,4 +1,3 @@
-const fetch = require('node-fetch');
 const blockParser = require('@wordpress/block-serialization-default-parser');
 
 
@@ -9,18 +8,9 @@ module.exports = {
   all: async () => [{ slug: '/' }],
   // the permalink definition takes a 'request' object and returns a relative permalink.
   permalink: '/', // this is the same as ({ request }) => `/${request.slug}/`;
-  data: async ({ request }) => {
+  data: async ({ request, query }) => {
 
-    const USER = process.env.WP_USER
-    const PASS = process.env.WP_PASS
-    const AUTH = 'Basic ' + Buffer.from(USER + ":" + PASS).toString('base64')
-
-    let headers = new fetch.Headers()
-    headers.append('Authorization', AUTH)
-
-    let posts = await fetch(`https://headless.marceloomens.com/wp-json/wp/v2/posts/?context=edit`, {headers}).then((response) =>
-      response.json()
-    )
+    let posts = query.apiFetch('wp/v2/posts/')
 
     // The data function populates an object that will be in available in our Svelte template under the 'data' key.
     return {

@@ -2,6 +2,7 @@ const path = require('path');
 const glob = require('glob');
 const fs = require('fs-extra');
 
+const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 
 /**
@@ -41,6 +42,31 @@ const hooks = [
           fs.outputFileSync(outputPath, fs.readFileSync(file));
         }
       });
+    },
+  },
+
+  {
+    hook: 'bootstrap',
+    name: 'addFetchHandler',
+    description: 'Add a fetch handler on the query object (available at `query.apiFetch`)',
+    run: async ({ query }) => {
+
+      const USER = process.env.WP_USER
+      const PASS = process.env.WP_PASS
+      const AUTH = 'Basic ' + Buffer.from(USER + ":" + PASS).toString('base64')
+
+      const headers = new fetch.Headers()
+      headers.append('Authorization', AUTH)
+
+      const apiFetch = async function( path, querystring='' ) {
+        return await fetch(`https://headless.marceloomens.com/wp-json/${path}/?context=edit&${querystring}`, {headers}).then((response) =>
+          response.json()
+        )
+      }
+
+      return {
+        query: { ...query, apiFetch }
+      }
     },
   },
 
