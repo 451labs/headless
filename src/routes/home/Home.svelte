@@ -11,7 +11,7 @@
 </script>
 
 <svelte:head>
-  <title>Headless Wordpress</title>
+  <title>{data.post.title.rendered} - Headless Wordpress</title>
   <meta name="description" content="Headless Wordpress" />
   <link href="{settings.origin}{request.permalink}" rel="canonical" />
 </svelte:head>

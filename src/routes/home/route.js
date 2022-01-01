@@ -25,6 +25,7 @@ module.exports = {
 
     let blocks = blockParser.parse(post.content.raw)
 
+
     // The data function populates an object that will be in available in our Svelte template under the 'data' key.
     return {
       post,
