@@ -3,9 +3,9 @@
 
   export let block;
 
-  const parser = getContext('parser');
+  const parse = getContext('parse');
 
-  const doc = parser.load(block.innerHTML, null, false);
+  const doc = parse(block.innerHTML, null, false);
   const p = doc('p').html();
 </script>
 

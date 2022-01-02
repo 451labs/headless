@@ -3,8 +3,8 @@
 
   export let block
 
-  const parser = getContext('parser');
-  const doc = parser.load(block.innerHTML, null, false);
+  const parse = getContext('parse');
+  const doc = parse(block.innerHTML, null, false);
 
   function parseTableSection(section, cells='td') {
     let result = [];
