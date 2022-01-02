@@ -1,10 +1,11 @@
-const blockParser = require('@wordpress/block-serialization-default-parser')
-const cheerio = require('cheerio')
-const domPurifyFactory = require('dompurify')
-const fetch = require('node-fetch')
-const { JSDOM } = require('jsdom')
+function __factoryWrapper__( __module__, __function__ ) {
+  const factory = require(__module__)
+  return factory[__function__]
+}
 
 function apiFetch() {
+  const fetch = require('node-fetch')
+
   const USER = process.env.WP_USER
   const PASS = process.env.WP_PASS
   const AUTH = 'Basic ' + Buffer.from(USER + ":" + PASS).toString('base64')
@@ -26,6 +27,9 @@ function apiFetch() {
 }
 
 function sanitize() {
+  const domPurifyFactory = require('dompurify')
+  const { JSDOM } = require('jsdom')
+
   const { window } = new JSDOM('<!DOCTYPE html>')
   const domPurify = domPurifyFactory(window)
   return function ( dirty, options ) {
@@ -40,6 +44,6 @@ module.exports = {
    * I'm abstracting away quite far from `blockParser` and `cheerio` by wrapping the
    * factory function instead of the factories. Is that desirable?
    */
-  blockParser: blockParser.parse,
-  domParser: cheerio.load,
+  blockParser: __factoryWrapper__('@wordpress/block-serialization-default-parser', 'parse'),
+  domParser: __factoryWrapper__('cheerio', 'load'),
 }
