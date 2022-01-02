@@ -12,8 +12,6 @@ module.exports = {
 
     const posts = await helpers.apiFetch('wp/v2/posts/', { _fields: ['id', 'slug', 'title', 'excerpt'] })
 
-    console.log(posts)
-
     // The data function populates an object that will be in available in our Svelte template under the 'data' key.
     return {
       posts
