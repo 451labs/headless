@@ -6,7 +6,7 @@
 
   export let data, request, settings, helpers;
 
-  setContext('parser', helpers.domParser);
+  setContext('parse', helpers.domParser);
 
 </script>
 

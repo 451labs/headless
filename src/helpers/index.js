@@ -27,6 +27,10 @@ function apiFetch() {
 
 module.exports = {
   apiFetch: apiFetch(),
+  /**
+   * I'm abstracting away quite far from `blockParser` and `cheerio` by wrapping the
+   * factory function instead of the factories. Is that desirable?
+   */
   blockParser: blockParser.parse,
-  domParser: cheerio,
+  domParser: cheerio.load,
 }

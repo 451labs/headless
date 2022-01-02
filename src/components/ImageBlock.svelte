@@ -3,8 +3,8 @@
 
   export let block, media
 
-  const parser = getContext('parser');
-  const doc = parser.load(block.innerHTML, null, false);
+  const parse = getContext('parse');
+  const doc = parse(block.innerHTML, null, false);
 
   const img = doc('img');
   const details = media.find( (el) => el.id === block.attrs.id );
