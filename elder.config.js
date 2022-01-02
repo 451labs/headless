@@ -1,6 +1,6 @@
 require('dotenv').config();
 module.exports = {
-  origin: 'https://crdp.netlify.app', // TODO: update this. The URL of your site's root, without a trailing slash
+  origin: 'https://451labs.org',
   lang: 'en',
   srcDir: 'src',
   distDir: 'public',
