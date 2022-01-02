@@ -1,16 +1,22 @@
-const { hookInterface, hookEntityDefinitions } = require('@elderjs/elderjs');
+const blockParser = require('@wordpress/block-serialization-default-parser');
+
 
 module.exports = {
-  // the all function returns an array of all of the 'request' objects of a route. Since this is the homepage, there is only one.
-  all: () => [{ slug: '/' }],
-  // the permalink function takes a 'request' object and returns a relative permalink. In this case "/"
-  permalink: '/',
-  data: ({ data }) => {
-    // The data function populates what data should be in available in our Svelte template.
-    // Since we will be listing out Elder.js's hooks, we make sure to populate that on the data object so it can be looped through
-    // in our Svelte template.
-    data.hookInterface = hookInterface;
-    data.hookEntityDefinitions = hookEntityDefinitions;
-    return data;
+  // the all function returns an array of all of the 'request' objects of a route.
+  // In this route, we're only returning one.
+  // if all() is ommited, an array of [{slug: 'route-name'}] will be set.
+  all: async () => [{ slug: '/' }],
+  // the permalink definition takes a 'request' object and returns a relative permalink.
+  permalink: '/', // this is the same as ({ request }) => `/${request.slug}/`;
+  data: async ({ request, helpers }) => {
+
+    const posts = await helpers.apiFetch('wp/v2/posts/', { _fields: ['id', 'slug', 'title', 'excerpt'] })
+
+    // The data function populates an object that will be in available in our Svelte template under the 'data' key.
+    return {
+      posts
+    };
   },
+
+  // layout: 'Layout.svelte' // this is auto-detected.
 };

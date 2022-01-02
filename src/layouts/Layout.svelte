@@ -4,30 +4,24 @@
 </script>
 
 <style>
-  :global(h1) {
-    font-style: italic;
-  }
   .container {
     max-width: 900px;
     margin: 0 auto;
+    margin-bottom: 96px;
     padding: 1rem;
   }
-
-  :root {
-    --balloon-color: #06395a;
-    --balloon-font-size: 14px;
-  }
-  .footer {
+  footer {
     padding: 2rem 0;
-    background: #06395a;
-    padding-top: 2rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
-      'Helvetica Neue', sans-serif;
+    background: #0B2627;
+    border-top: 10px solid #e99043;
+    bottom: 0;
     color: #f4f7fb;
-    text-align: center;
     font-size: 14px;
+    position: fixed;
+    text-align: center;
+    width: 100%;
   }
-  .footer a {
+  footer a {
     color: #f4f7fb;
   }
   :global(ul li),
@@ -37,11 +31,9 @@
 </style>
 
 <svelte:head>
-  <!-- You can remove this balloon it is just for hover effects -->
-  <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css" />
 </svelte:head>
 
 <div class="container">
   {@html templateHtml}
 </div>
-<div class="footer">Built with ❤ and <a href="https://elderguide.com/tech/elderjs/">Elder.js</a></div>
+<footer>Built with ❤ and <a href="https://elderguide.com/tech/elderjs/">Elder.js</a></footer>
