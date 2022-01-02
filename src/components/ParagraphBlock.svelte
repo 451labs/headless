@@ -1,12 +1,13 @@
 <script>
-  import { getContext } from 'svelte';
+  import { getContext } from 'svelte'
 
-  export let block;
+  export let block
 
-  const parse = getContext('parse');
+  const ALLOWED_TAGS = ['strong','em','a','p']
 
-  const doc = parse(block.innerHTML, null, false);
-  const p = doc('p').html();
+  const parse = getContext('domParser')
+  const dom = parse(block.innerHTML, { ALLOWED_TAGS })
+  const p = dom.querySelector('p')
 </script>
 
-<p>{@html p}</p>
+<p>{@html p.innerHTML}</p>
