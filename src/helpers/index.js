@@ -1,6 +1,6 @@
-function __factoryWrapper__( __module__, __function__ ) {
-  const factory = require(__module__)
-  return factory[__function__]
+function __factoryWrapper( factory, fn ) {
+  const f = require(factory)
+  return f[fn]
 }
 
 function apiFetch() {
@@ -44,6 +44,6 @@ module.exports = {
    * I'm abstracting away quite far from `blockParser` and `cheerio` by wrapping the
    * factory function instead of the factories. Is that desirable?
    */
-  blockParser: __factoryWrapper__('@wordpress/block-serialization-default-parser', 'parse'),
-  domParser: __factoryWrapper__('cheerio', 'load'),
+  blockParser: __factoryWrapper('@wordpress/block-serialization-default-parser', 'parse'),
+  domParser: __factoryWrapper('cheerio', 'load'),
 }
