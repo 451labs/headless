@@ -7,6 +7,7 @@
   export let data, request, settings, helpers;
 
   setContext('parse', helpers.domParser);
+  setContext('sanitize', helpers.sanitize);
 
 </script>
 

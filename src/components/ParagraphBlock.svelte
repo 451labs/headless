@@ -3,10 +3,8 @@
 
   export let block;
 
-  const parse = getContext('parse');
-
-  const doc = parse(block.innerHTML, null, false);
-  const p = doc('p').html();
+  const sanitize = getContext('sanitize');
+  const p = sanitize(block.innerHTML, {ALLOWED_TAGS: ['strong','em','a']});
 </script>
 
 <p>{@html p}</p>
