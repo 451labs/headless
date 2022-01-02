@@ -3,8 +3,8 @@ module.exports = {
   permalink: '/article/:slug/', // this is the same as ({ request }) => `/${request.slug}/`;
   data: async ({ request, helpers }) => {
 
-    let post = await helpers.apiFetch(`wp/v2/posts/${request.post_id}/`)
-    let blocks = helpers.blockParser(post.content.raw)
+    const post = await helpers.apiFetch(`wp/v2/posts/${request.post_id}/`)
+    const blocks = helpers.blockParser(post.content.raw)
 
     // preprocess media
     let mids = []
@@ -13,7 +13,7 @@ module.exports = {
         mids.push(block.attrs.id)
       }
     }
-    let media = await helpers.apiFetch('wp/v2/media/', { include: mids })
+    const media = await helpers.apiFetch('wp/v2/media/', { include: mids })
 
     // The data function populates an object that will be in available in our Svelte template under the 'data' key.
     return {

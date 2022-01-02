@@ -10,7 +10,9 @@ module.exports = {
   permalink: '/', // this is the same as ({ request }) => `/${request.slug}/`;
   data: async ({ request, helpers }) => {
 
-    let posts = helpers.apiFetch('wp/v2/posts/')
+    const posts = await helpers.apiFetch('wp/v2/posts/', { _fields: ['id', 'slug', 'title'] })
+
+    console.log(posts)
 
     // The data function populates an object that will be in available in our Svelte template under the 'data' key.
     return {

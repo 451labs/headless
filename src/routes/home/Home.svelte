@@ -12,4 +12,9 @@
 
 <h1>Headless Wordpress</h1>
 
+{#each data.posts as post}
+  <h2>{@html post.title.rendered}</h2>
+  <p>{post.id}: {post.slug}</p>
+{/each}
+
 </article>
