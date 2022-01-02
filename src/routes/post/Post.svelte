@@ -1,13 +1,12 @@
 <script>
-  import { setContext } from 'svelte';
-  import ImageBlock from '../../components/ImageBlock.svelte';
-  import ParagraphBlock from '../../components/ParagraphBlock.svelte';
-  import TableBlock from '../../components/TableBlock.svelte';
+  import { setContext } from 'svelte'
+  import ImageBlock from '../../components/ImageBlock.svelte'
+  import ParagraphBlock from '../../components/ParagraphBlock.svelte'
+  import TableBlock from '../../components/TableBlock.svelte'
 
-  export let data, request, settings, helpers;
+  export let data, request, settings, helpers
 
-  setContext('parse', helpers.domParser);
-  setContext('sanitize', helpers.sanitize);
+  setContext('domParser', helpers.domParser)
 
 </script>
 

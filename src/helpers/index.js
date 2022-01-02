@@ -14,10 +14,10 @@ function apiFetch() {
   headers.append('Authorization', AUTH)
 
   return async function ( path, params={} ) {
-    let querystring = '?context=edit';
+    let querystring = '?context=edit'
     for (let [key, value] of Object.entries(params)) {
       value = Array.isArray(value) ? value.join(',') : value
-      querystring += (`&${key}=${value}`);
+      querystring += (`&${key}=${value}`)
     }
 
     return await fetch(`https://headless.marceloomens.com/wp-json/${path}/${querystring}`, {headers}).then((response) =>
@@ -26,24 +26,26 @@ function apiFetch() {
   }
 }
 
-function sanitize() {
-  const domPurifyFactory = require('dompurify')
+function domParser() {
+  const createDOMPurify = require('dompurify')
   const { JSDOM } = require('jsdom')
-
-  const { window } = new JSDOM('<!DOCTYPE html>')
-  const domPurify = domPurifyFactory(window)
-  return function ( dirty, options ) {
-    return domPurify.sanitize( dirty, options )
+  /**
+   * How can this factory function and how can these instances of jsdom and
+   * dompurify be optimised for our specific use case?
+   */
+  const window = new JSDOM('<!DOCTYPE html>').window
+  const DOMPurify = createDOMPurify(window)
+  /**
+   * Is this going to work across multiple cores? Should `JSDOM` be
+   * instantiated for each process? How about `DOMPurify`?
+   */
+  return function ( dirty, options={} ) {
+    return DOMPurify.sanitize(dirty, { ...options, RETURN_DOM: true})
   }
 }
 
 module.exports = {
   apiFetch: apiFetch(),
-  sanitize: sanitize(),
-  /**
-   * I'm abstracting away quite far from `blockParser` and `cheerio` by wrapping the
-   * factory function instead of the factories. Is that desirable?
-   */
   blockParser: __factoryWrapper('@wordpress/block-serialization-default-parser', 'parse'),
-  domParser: __factoryWrapper('cheerio', 'load'),
+  domParser: domParser(),
 }

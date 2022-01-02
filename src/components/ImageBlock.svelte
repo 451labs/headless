@@ -1,18 +1,20 @@
 <script>
-  import { getContext } from 'svelte';
+  import { getContext } from 'svelte'
 
   export let block, media
 
-  const parse = getContext('parse');
-  const doc = parse(block.innerHTML, null, false);
+  const ALLOWED_TAGS = ['figure','img','figcaption']
 
-  const img = doc('img');
-  const details = media.find( (el) => el.id === block.attrs.id );
+  const parse = getContext('domParser')
+  const dom = parse(block.innerHTML, { ALLOWED_TAGS })
 
-  const caption = doc('figcaption').html();
+  const img = dom.querySelector('img')
+  const details = media.find( (el) => el.id === block.attrs.id )
+
+  const figcaption = dom.querySelector('figcaption')
 </script>
 
 <figure>
-  <img src="{details.media_details.sizes.full.source_url}" alt="{img.attr('alt')}" width="{block.attrs.width}" height="{block.attrs.height}" />
-  <figcaption>{@html caption}</figcaption>
+  <img src="{details.media_details.sizes.full.source_url}" alt="{img.alt}" width="{block.attrs.width}" height="{block.attrs.height}" />
+  <figcaption>{@html figcaption.innerHTML}</figcaption>
 </figure>

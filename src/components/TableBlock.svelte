@@ -1,29 +1,32 @@
 <script>
-  import { getContext } from 'svelte';
+  import { getContext } from 'svelte'
 
   export let block
 
-  const parse = getContext('parse');
-  const doc = parse(block.innerHTML, null, false);
+  const ALLOWED_TAGS = ['figure','table','thead','tbody','tfoot','tr','th','td','figcaption']
 
-  function parseTableSection(section, cells='td') {
-    let result = [];
-    doc(`${section} tr`).each( (_i, tr) => {
-      let row = [];
-      doc(cells, tr).each( (_i, td) => {
-        row.push(doc(td).html());
-      } );
-      result.push(row);
-    });
-    return result;
+  const parse = getContext('domParser')
+  const dom = parse(block.innerHTML, { ALLOWED_TAGS })
+
+  function parseTableSection(selector) {
+    const section = dom.querySelector(selector)
+    let table = []
+    for (let tr of section.rows) {
+      let row = []
+      for (let td of tr.cells) {
+        row.push(td)
+      }
+      table.push(row)
+    }
+    return table
   }
 
   const table = {
-    thead: parseTableSection('thead', 'th'),
-    tbody: parseTableSection('tbody'),
-    tfoot: parseTableSection('tfoot'),
-  };
-  const caption = doc('figcaption').html();
+    thead: parseTableSection('table>thead'),
+    tbody: parseTableSection('table>tbody'),
+    tfoot: parseTableSection('table>tfoot'),
+  }
+  const figcaption = dom.querySelector('figcaption')
 </script>
 
 <figure>
@@ -33,7 +36,7 @@
         {#each table.thead as tr}
           <tr>
             {#each tr as th}
-              <th>{@html th}</th>
+              <th>{@html th.innerHTML}</th>
             {/each}
           </tr>
         {/each}
@@ -44,7 +47,7 @@
       {#each table.tbody as tr}
         <tr>
           {#each tr as td}
-            <td>{@html td}</td>
+            <td>{@html td.innerHTML}</td>
           {/each}
         </tr>
       {/each}
@@ -55,12 +58,12 @@
       {#each table.tfoot as tr}
         <tr>
           {#each tr as td}
-            <td>{@html td}</td>
+            <td>{@html td.innerHTML}</td>
           {/each}
         </tr>
       {/each}
     </tfoot>
     {/if}
   </table>
-  <figcaption>{@html caption}</figcaption>
+  <figcaption>{@html figcaption.innerHTML}</figcaption>
 </figure>
