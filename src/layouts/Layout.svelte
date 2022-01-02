@@ -4,23 +4,24 @@
 </script>
 
 <style>
-  :global(h1) {
-    font-style: italic;
-  }
   .container {
     max-width: 900px;
     margin: 0 auto;
+    margin-bottom: 96px;
     padding: 1rem;
   }
-  .footer {
+  footer {
     padding: 2rem 0;
     background: #0B2627;
     border-top: 10px solid #e99043;
+    bottom: 0;
     color: #f4f7fb;
-    text-align: center;
     font-size: 14px;
+    position: fixed;
+    text-align: center;
+    width: 100%;
   }
-  .footer a {
+  footer a {
     color: #f4f7fb;
   }
   :global(ul li),
@@ -35,4 +36,4 @@
 <div class="container">
   {@html templateHtml}
 </div>
-<div class="footer">Built with ❤ and <a href="https://elderguide.com/tech/elderjs/">Elder.js</a></div>
+<footer>Built with ❤ and <a href="https://elderguide.com/tech/elderjs/">Elder.js</a></footer>

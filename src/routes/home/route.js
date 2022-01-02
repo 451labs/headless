@@ -10,7 +10,7 @@ module.exports = {
   permalink: '/', // this is the same as ({ request }) => `/${request.slug}/`;
   data: async ({ request, helpers }) => {
 
-    const posts = await helpers.apiFetch('wp/v2/posts/', { _fields: ['id', 'slug', 'title'] })
+    const posts = await helpers.apiFetch('wp/v2/posts/', { _fields: ['id', 'slug', 'title', 'excerpt'] })
 
     console.log(posts)
 
