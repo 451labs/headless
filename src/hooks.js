@@ -1,9 +1,6 @@
 const path = require('path');
 const glob = require('glob');
 const fs = require('fs-extra');
-const os = require('os');
-
-const cheerio = require('cheerio');
 
 /**
  * Hooks!
@@ -42,25 +39,6 @@ const hooks = [
           fs.outputFileSync(outputPath, fs.readFileSync(file));
         }
       });
-    },
-  },
-
-  // Below are some hooks to try and play with to get a better feel of what is possible.
-
-  {
-    hook: 'request',
-    name: 'addParserObject',
-    description: 'This hook adds a cheeriojs parser object to request data on routes that may require it.',
-    priority: 50,
-    run: async ({ request, data }) => {
-      if (request.route === 'home') {
-        return {
-          data: {
-            ...data,
-            parser: cheerio,
-          },
-        };
-      }
     },
   },
 

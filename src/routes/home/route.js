@@ -1,4 +1,3 @@
-const fetch = require('node-fetch');
 const blockParser = require('@wordpress/block-serialization-default-parser');
 
 
@@ -8,42 +7,18 @@ module.exports = {
   // if all() is ommited, an array of [{slug: 'route-name'}] will be set.
   all: async () => [{ slug: '/' }],
   // the permalink definition takes a 'request' object and returns a relative permalink.
-  // In this case "/simple/"
   permalink: '/', // this is the same as ({ request }) => `/${request.slug}/`;
-  data: async ({ request }) => {
+  data: async ({ request, helpers }) => {
 
-    const USER = process.env.WP_USER
-    const PASS = process.env.WP_PASS
-    const AUTH = 'Basic ' + Buffer.from(USER + ":" + PASS).toString('base64')
+    const posts = await helpers.apiFetch('wp/v2/posts/', { _fields: ['id', 'slug', 'title'] })
 
-    let headers = new fetch.Headers()
-    headers.append('Authorization', AUTH)
-
-    let post = await fetch(`https://headless.marceloomens.com/wp-json/wp/v2/posts/1/?context=edit`, {headers}).then((response) =>
-      response.json()
-    )
-
-    let blocks = blockParser.parse(post.content.raw)
-
-    // preprocess media
-    let mids = []
-    for (const block of blocks) {
-      if ('core/image' === block.blockName) {
-        mids.push(block.attrs.id)
-      }
-    }
-    let media = await fetch(`https://headless.marceloomens.com/wp-json/wp/v2/media/?context=edit&include=${mids.join(',')}`, {headers}).then((response) =>
-      response.json()
-    )
+    console.log(posts)
 
     // The data function populates an object that will be in available in our Svelte template under the 'data' key.
     return {
-      post,
-      blocks,
-      media,
+      posts
     };
   },
 
-  // template: 'Simple.svelte' // this is auto-detected.
   // layout: 'Layout.svelte' // this is auto-detected.
 };
