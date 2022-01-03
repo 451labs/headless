@@ -13,7 +13,8 @@ module.exports = {
         mids.push(block.attrs.id)
       }
     }
-    const media = await helpers.apiFetch('wp/v2/media/', { include: mids })
+
+    const media = mids.length < 1 ? [] : await helpers.apiFetch('wp/v2/media/', { include: mids })
 
     // The data function populates an object that will be in available in our Svelte template under the 'data' key.
     return {
