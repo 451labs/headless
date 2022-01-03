@@ -49,7 +49,6 @@ const hooks = [
       'Sets sitewide settings from the /settings API endpoint on the data object.',
     priority: 0,
     run: async ({ data, helpers }) => {
-      console.log(helpers)
       const settings = await helpers.apiFetch('wp/v2/settings/')
       return { data: { ...data, settings } }
     },

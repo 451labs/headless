@@ -23,21 +23,24 @@ article {
 </style>
 
 <svelte:head>
-  <title>Home - {data.settings.title}</title>
-  <meta name="description" content="{data.settings.description}" />
+  <title>{data.settings.title}: {data.settings.description}</title>
+  <meta name="description" content="{data.settings.title}: {data.settings.description}" />
   <link href="{settings.origin}{request.permalink}" rel="canonical" />
 </svelte:head>
 
-<h1>{data.settings.title}</h1>
-<h2>{data.settings.description}</h2>
+<section>
+  <h1>{data.settings.title}</h1>
+  <h2>{data.settings.description}</h2>
 
-<div class="grid">
+</section>
 
-  {#each data.posts as post}
-    <article>
-      <h2><a href="/article/{post.slug}/">{@html post.title.rendered}</a></h2>
-      <p>{post.excerpt.raw}</p>
-    </article>
-  {/each}
-
-</div>
+<main>
+  <div class="grid">
+    {#each data.posts as post}
+      <article>
+        <h3><a href="/article/{post.slug}/">{@html post.title.rendered}</a></h3>
+        <p>{post.excerpt.raw}</p>
+      </article>
+    {/each}
+  </div>
+</main>
