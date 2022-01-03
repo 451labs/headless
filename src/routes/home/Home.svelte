@@ -23,20 +23,24 @@ article {
 </style>
 
 <svelte:head>
-  <title>Home - Headless Wordpress</title>
-  <meta name="description" content="Headless Wordpress" />
+  <title>{data.settings.title}: {data.settings.description}</title>
+  <meta name="description" content="{data.settings.title}: {data.settings.description}" />
   <link href="{settings.origin}{request.permalink}" rel="canonical" />
 </svelte:head>
 
-<h1>Headless Wordpress</h1>
+<section>
+  <h1>{data.settings.title}</h1>
+  <h2>{data.settings.description}</h2>
 
-<div class="grid">
+</section>
 
-  {#each data.posts as post}
-    <article>
-      <h2><a href="/article/{post.slug}/">{@html post.title.rendered}</a></h2>
-      <p>{post.excerpt.raw}</p>
-    </article>
-  {/each}
-
-</div>
+<main>
+  <div class="grid">
+    {#each data.posts as post}
+      <article>
+        <h3><a href="/article/{post.slug}/">{@html post.title.rendered}</a></h3>
+        <p>{post.excerpt.raw}</p>
+      </article>
+    {/each}
+  </div>
+</main>

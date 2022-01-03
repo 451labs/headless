@@ -1,9 +1,14 @@
 <script>
   import style from '../../assets/style.css';
-  export let templateHtml, settings;
+  export let data, request, templateHtml;
+
+  const breadcrumb = ['post'].includes(request.route);
 </script>
 
 <style>
+  :global(h1) {
+    font-style: italic;
+  }
   .container {
     max-width: 900px;
     margin: 0 auto;
@@ -32,6 +37,15 @@
 
 <svelte:head>
 </svelte:head>
+
+{#if breadcrumb}
+  <nav>
+    <ul>
+      <li><a href="/">{data.settings.title}</a></li>
+      <li><a href="{request.permalink}">{request.title}</a></li>
+    </ul>
+  </nav>
+{/if}
 
 <div class="container">
   {@html templateHtml}
