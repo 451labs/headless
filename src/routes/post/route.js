@@ -1,5 +1,5 @@
 module.exports = {
-  all: async () => [{ post_id: 1, slug: 'hello-world' }, { post_id: 16, slug: 'collateral-freedom' }],
+  all: async () => [{ post_id: 1, slug: 'hello-world', title: 'Hello World!' }, { post_id: 16, slug: 'collateral-freedom', title: 'Collateral Freedom' }],
   permalink: '/article/:slug/', // this is the same as ({ request }) => `/${request.slug}/`;
   data: async ({ request, helpers }) => {
 

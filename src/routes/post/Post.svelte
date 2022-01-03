@@ -11,15 +11,18 @@
 </script>
 
 <svelte:head>
-  <title>{data.post.title.rendered} - Headless Wordpress</title>
-  <meta name="description" content="Headless Wordpress" />
+  <title>{data.settings.title}: {data.post.title.rendered}</title>
+  <meta name="description" content="{data.settings.title}: {data.post.title.rendered}" />
   <link href="{settings.origin}{request.permalink}" rel="canonical" />
 </svelte:head>
 
+
+<section>
+  <h1>{data.settings.title}</h1>
+  <h2>{data.post.title.rendered}</h2>
+</section>
+
 <article>
-
-<h1>{data.post.title.rendered}</h1>
-
 {#each data.blocks as block}
   {#if 'core/paragraph' === block.blockName}
     <ParagraphBlock block={block} />
@@ -29,5 +32,4 @@
     <TableBlock block={block} />
   {/if}
 {/each}
-
 </article>
