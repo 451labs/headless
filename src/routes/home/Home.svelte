@@ -23,12 +23,13 @@ article {
 </style>
 
 <svelte:head>
-  <title>Home - Headless Wordpress</title>
-  <meta name="description" content="Headless Wordpress" />
+  <title>Home - {data.settings.title}</title>
+  <meta name="description" content="{data.settings.description}" />
   <link href="{settings.origin}{request.permalink}" rel="canonical" />
 </svelte:head>
 
-<h1>Headless Wordpress</h1>
+<h1>{data.settings.title}</h1>
+<h2>{data.settings.description}</h2>
 
 <div class="grid">
 

@@ -42,6 +42,18 @@ const hooks = [
     },
   },
 
+  // {
+  //   hook: 'bootstrap',
+  //   name: 'setSitewideSettingsOnData',
+  //   description:
+  //     'Sets sitewide settings from the /settings API endpoint on the data object.',
+  //   run: async ({ data, helpers }) => {
+  //     console.log(helpers)
+  //     const settings = await helpers.apiFetch('wp/v2/settings/')
+  //     return { data: { ...data, settings } }
+  //   },
+  // },
+
   // If you'd like to see specific examples of how to do things that you think could help improve the template please create a GH issue.
 ];
 module.exports = hooks;
