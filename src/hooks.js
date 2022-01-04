@@ -49,6 +49,10 @@ const hooks = [
       'Sets sitewide settings from the /settings API endpoint on the data object.',
     priority: 0,
     run: async ({ data, helpers }) => {
+      /**
+       * Truth be told, should I really be pulling this from the server? This
+       * data is pretty much immutable after all.
+       */
       const settings = await helpers.apiFetch('wp/v2/settings/')
       return { data: { ...data, settings } }
     },
